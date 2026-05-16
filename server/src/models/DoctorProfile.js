@@ -14,6 +14,18 @@ const doctorProfileSchema = new mongoose.Schema({
   experience: Number, // in years
   bio: String,
   consultationFee: Number,
+  timezone: {
+    type: String,
+    default: 'UTC',
+  },
+  consultationDuration: {
+    type: Number,
+    default: 30, // in minutes
+  },
+  bufferTime: {
+    type: Number,
+    default: 5, // in minutes
+  },
   availability: [{
     day: {
       type: String,

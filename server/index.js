@@ -4,17 +4,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const http = require('http');
-const { Server } = require('socket.io');
+const { initSocket } = require('./src/config/socket');
 const connectDB = require('./src/config/db');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: '*', // In production, replace with frontend URL
-    methods: ['GET', 'POST'],
-  },
-});
+
+// Initialize Socket.io
+initSocket(server);
 
 // Connect to Database
 connectDB();
@@ -27,17 +24,12 @@ app.use(helmet({
 }));
 app.use(morgan('dev'));
 
-// Socket.io connection
-io.on('connection', (socket) => {
-  console.log('User connected:', socket.id);
-  
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-  });
-});
-
 // Routes
 app.use('/api/auth', require('./src/routes/authRoutes'));
+app.use('/api/doctors', require('./src/routes/doctorRoutes'));
+app.use('/api/appointments', require('./src/routes/appointmentRoutes'));
+app.use('/api/notifications', require('./src/routes/notificationRoutes'));
+app.use('/api/medical-records', require('./src/routes/medicalRecordRoutes'));
 
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Healthcare Platform API' });
