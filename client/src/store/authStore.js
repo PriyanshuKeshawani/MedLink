@@ -11,6 +11,7 @@ const useAuthStore = create(
       isAuthenticated: false,
       
       setAuth: (user, token) => set({ user, token, isAuthenticated: true }),
+      updateUser: (updatedFields) => set((state) => ({ user: { ...state.user, ...updatedFields } })),
       
       logout: () => {
         set({ user: null, token: null, isAuthenticated: false });

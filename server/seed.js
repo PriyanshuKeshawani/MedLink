@@ -147,6 +147,19 @@ const seedDoctors = async () => {
       }
     ]);
 
+    // Seed mock appointments for testing queue
+    const Appointment = require('./src/models/Appointment');
+    await Appointment.deleteMany({});
+    await Appointment.create({
+      patient: patient._id,
+      doctor: doctor._id,
+      date: new Date(),
+      timeSlot: { start: '10:30 AM', end: '11:00 AM' },
+      status: 'confirmed',
+      type: 'online',
+      reason: 'Chest discomfort and follow-up'
+    });
+
     console.log('Database Seeded Successfully');
     process.exit();
   } catch (error) {

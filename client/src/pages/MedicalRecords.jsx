@@ -13,6 +13,7 @@ import {
 import axios from 'axios';
 import DashboardLayout from '../components/DashboardLayout';
 import useAuthStore from '../store/authStore';
+import { printPrescription } from '../utils/printPrescription';
 
 const MedicalRecords = () => {
   const [records, setRecords] = useState([]);
@@ -108,7 +109,7 @@ const MedicalRecords = () => {
                       <div>
                         <div className="flex items-center gap-3 mb-1">
                           <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${styles.bg} ${styles.color}`}>
-                            {record.type.replace('_', ' ')}
+                            {record.type?.replace('_', ' ') || 'Unknown'}
                           </span>
                           <span className="text-xs text-slate-400 font-medium">
                             {new Date(record.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -119,16 +120,18 @@ const MedicalRecords = () => {
                       </div>
                       
                       <div className="flex gap-2">
-                        <button className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-primary-50 hover:text-primary-600 transition-all">
+                        <button 
+                          onClick={() => printPrescription(record)}
+                          title="Print / Save PDF"
+                          className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-primary-50 hover:text-primary-600 transition-all flex items-center gap-1.5"
+                        >
                           <Download className="w-5 h-5" />
-                        </button>
-                        <button className="p-3 bg-slate-50 rounded-xl text-slate-400 hover:bg-primary-50 hover:text-primary-600 transition-all">
-                          <ChevronRight className="w-5 h-5" />
+                          <span className="text-xs font-bold hidden md:inline">Print / Save PDF</span>
                         </button>
                       </div>
                     </div>
 
-                    {record.clinicalNotes && (
+                    {record.type === 'consultation' && record.clinicalNotes && (
                       <div className="grid md:grid-cols-2 gap-6 p-6 bg-slate-50/50 rounded-2xl border border-slate-100">
                         <div>
                           <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Diagnosis</h4>

@@ -9,6 +9,10 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import DoctorSearch from './pages/DoctorSearch';
 import MedicalRecords from './pages/MedicalRecords';
+import ConsultationWorkspace from './pages/ConsultationWorkspace';
+import Appointments from './pages/Appointments';
+import Messages from './pages/Messages';
+import Settings from './pages/Settings';
 import { Toaster } from 'react-hot-toast';
 
 // Landing Page Wrapper
@@ -58,8 +62,12 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<PatientDashboard />} />
         <Route path="/dashboard/doctor" element={<DoctorDashboard />} />
+        <Route path="/doctor/consultation/:appointmentId" element={<ConsultationWorkspace />} />
         <Route path="/doctors" element={<DoctorSearch />} />
         <Route path="/records" element={<MedicalRecords />} />
+        <Route path="/appointments" element={<Appointments />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );

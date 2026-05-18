@@ -30,6 +30,7 @@ app.use('/api/doctors', require('./src/routes/doctorRoutes'));
 app.use('/api/appointments', require('./src/routes/appointmentRoutes'));
 app.use('/api/notifications', require('./src/routes/notificationRoutes'));
 app.use('/api/medical-records', require('./src/routes/medicalRecordRoutes'));
+app.use('/api/messages', require('./src/routes/messageRoutes'));
 
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Healthcare Platform API' });

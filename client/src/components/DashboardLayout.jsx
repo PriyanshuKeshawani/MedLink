@@ -35,7 +35,7 @@ const DashboardLayout = ({ children, role = 'patient' }) => {
   return (
     <div className="flex h-screen bg-slate-50 font-sans">
       {/* Sidebar */}
-      <aside className="w-64 glass border-r border-slate-200 flex flex-col p-6">
+      <aside className="w-64 glass border-r border-slate-200 flex flex-col p-6 z-30 relative">
         <div className="flex items-center gap-3 mb-10 px-2">
           <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
             <LayoutDashboard className="text-white w-6 h-6" />
@@ -61,10 +61,17 @@ const DashboardLayout = ({ children, role = 'patient' }) => {
         </nav>
 
         <div className="pt-6 border-t border-slate-200 space-y-2">
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 rounded-xl transition-all">
+          <Link 
+            to="/settings"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              location.pathname === '/settings'
+                ? 'bg-primary-50 text-primary-700 shadow-sm' 
+                : 'text-slate-500 hover:bg-slate-100'
+            }`}
+          >
             <Settings className="w-5 h-5" />
             <span className="font-semibold">Settings</span>
-          </button>
+          </Link>
           <button 
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-xl transition-all"
@@ -78,7 +85,7 @@ const DashboardLayout = ({ children, role = 'patient' }) => {
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="h-20 glass border-b border-slate-200 flex items-center justify-between px-10 shrink-0">
+        <header className="h-20 glass border-b border-slate-200 flex items-center justify-between px-10 shrink-0 z-20 relative">
           <div>
             <h2 className="text-xl font-bold">Good Morning, {user?.firstName || 'User'} 👋</h2>
             <p className="text-sm text-slate-500">Here's what's happening with your health today.</p>
